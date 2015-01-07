@@ -62,7 +62,7 @@ markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
 
   <para>These are corner cases - for most simple Docbook documents the
   pipeline works well as a formatter. As an exampled this README was produced
-  in <link xlink:href="???">XMLMind XML Editor</link> using a Docbook 5.0
-  Section Template and exported to markdown and POD using the above
-  pipeline.</para>
+  in <link xlink:href="http://www.xmlmind.com/xmleditor/">XMLMind XML
+  Editor</link> using a Docbook 5.0 Section Template and exported to markdown
+  and POD using the above pipeline.</para>
 </section>

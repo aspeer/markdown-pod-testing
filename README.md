@@ -32,4 +32,4 @@ The resulting output has a number of artifacts still being worked through:
 
 -   Some code is not recognised as such (possibly by Markdent).
 
-These are corner cases - for most simple Docbook documents the pipeline works well as a formatter. As an exampled this README was produced in [XMLMind XML Editor](???) using a Docbook 5.0 Section Template and exported to markdown and POD using the above pipeline.
+These are corner cases - for most simple Docbook documents the pipeline works well as a formatter. As an exampled this README was produced in [XMLMind XML Editor](http://www.xmlmind.com/xmleditor/) using a Docbook 5.0 Section Template and exported to markdown and POD using the above pipeline.
