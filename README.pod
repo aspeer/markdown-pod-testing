@@ -1,0 +1,65 @@
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+Test tablle
+=encoding utf8
+
+
+=head1 Introduction
+
+The files in this repository show output of testing a docbook to POD conversion pipeline. It uses the reference document:
+
+L<http://docbook.org/docs/howto/2009-06-16/howto.xml|#???>
+
+available as HTML via:
+
+L<http://docbook.org/docs/howto/2009-06-16/|#???>
+
+The XML piped through the following conversion:
+
+    pandoc -f docbook -t markdown_github > howto.md
+    markdown2pod --dialect Theory howto.md > howto_m2pod-patched.pod
+
+The following versions of apps/modules are used:
+
+L<pandoc|http://johnmacfarlane.net/pandoc/> 1.13.2
+
+L<Markdent|http://search.cpan.org/dist/Markdent/> 0.25
+
+L<Markdown::Pod|???> 0.005 + patches from https://github.com/aspeer/Markdown-Pod
+
+Markdown::Pod has been patched to allow the --dialect option + to include handlers missing from the original module + as simple Table formatter (Text::Table::Tiny).
+
+The resulting output has a number of artifacts still being worked through:
+
+=over
+
+=item -
+
+Pandoc is not converting the "Schema Jungle" table into markdown - it is preserved as XML in the markdown output
+
+
+
+=item -
+
+The "Removed Elements" table is not formatted correctly in the markdown (possibly by pandoc)
+
+
+
+=item -
+
+Some code is not recognised as such (possibly by Markdent).
+
+
+
+=back
+
+These are corner cases - for most simple Docbook documents the pipeline works well as a formatter. As an exampled this README was produced in L<XMLMind XML Editor|???> using a Docbook 5.0 Section Template and exported to markdown and POD using the above pipeline.

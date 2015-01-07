@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="5.0" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:m="http://www.w3.org/1998/Math/MathML"
+         xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns:db="http://docbook.org/ns/docbook">
+  <title>Introduction </title>
+
+  <para>The files in this repository show output of testing a docbook to POD
+  conversion pipeline. It uses the reference document:</para>
+
+  <para><link
+  linkend="???">http://docbook.org/docs/howto/2009-06-16/howto.xml</link></para>
+
+  <para>available as HTML via:</para>
+
+  <para><link
+  linkend="???">http://docbook.org/docs/howto/2009-06-16/</link></para>
+
+  <para>The XML piped through the following conversion:</para>
+
+  <programlisting>pandoc -f docbook -t markdown_github &gt; howto.md
+markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
+</programlisting>
+
+  <para>The following versions of apps/modules are used:</para>
+
+  <para><link xlink:href="http://johnmacfarlane.net/pandoc/">pandoc</link>
+  1.13.2</para>
+
+  <para><link
+  xlink:href="http://search.cpan.org/dist/Markdent/">Markdent</link>
+  0.25</para>
+
+  <para><link xlink:href="???">Markdown::Pod</link> 0.005 + patches from
+  https://github.com/aspeer/Markdown-Pod</para>
+
+  <para>Markdown::Pod has been patched to allow the --dialect option + to
+  include handlers missing from the original module + as simple Table
+  formatter (Text::Table::Tiny).</para>
+
+  <para>The resulting output has a number of artifacts still being worked
+  through:</para>
+
+  <itemizedlist>
+    <listitem>
+      <para>Pandoc is not converting the "Schema Jungle" table into markdown -
+      it is preserved as XML in the markdown output</para>
+    </listitem>
+
+    <listitem>
+      <para>The "Removed Elements" table is not formatted correctly in the
+      markdown (possibly by pandoc)</para>
+    </listitem>
+
+    <listitem>
+      <para>Some code is not recognised as such (possibly by Markdent).</para>
+    </listitem>
+  </itemizedlist>
+
+  <para>These are corner cases - for most simple Docbook documents the
+  pipeline works well as a formatter. As an exampled this README was produced
+  in <link xlink:href="???">XMLMind XML Editor</link> using a Docbook 5.0
+  Section Template and exported to markdown and POD using the above
+  pipeline.</para>
+</section>
