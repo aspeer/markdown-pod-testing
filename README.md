@@ -18,11 +18,13 @@ The following versions of apps/modules are used:
 
 [pandoc](http://johnmacfarlane.net/pandoc/) 1.13.2
 
-[Markdent](http://search.cpan.org/dist/Markdent/) 0.25
+[Markdent](http://search.cpan.org/dist/Markdent/) 0.25 + patched from <https://github.com/aspeer/Markdent>
 
-[Markdown::Pod](???) 0.005 + patches from https://github.com/aspeer/Markdown-Pod
+[Markdown::Pod](???) 0.005 + patches from <https://github.com/aspeer/Markdown-Pod>
 
-Markdown::Pod has been patched to allow the --dialect option + to include handlers missing from the original module + as simple Table formatter (Text::Table::Tiny).
+Markdent
+
+Markdown::Pod has been patched to allow the --dialect option + to include handlers missing from the original module + as simple Table formatter (Text::Table::Tiny). Mardent has been patched to work with GitHub markup produced by Pandoc v1.12, v1.13
 
 The resulting output has a number of artifacts still being worked through:
 
@@ -30,6 +32,6 @@ The resulting output has a number of artifacts still being worked through:
 
 -   The "Removed Elements" table is not formatted correctly in the markdown (possibly by pandoc)
 
--   Some code is not recognised as such (possibly by Markdent).
+-   Replaceable (e.g. &version;) elements are not interpreted correctly
 
 These are corner cases - for most simple Docbook documents the pipeline works well as a formatter. As an exampled this README was produced in [XMLMind XML Editor](http://www.xmlmind.com/xmleditor/) using a Docbook 5.0 Section Template and exported to markdown and POD using the above pipeline.

@@ -6,7 +6,7 @@
          xmlns:m="http://www.w3.org/1998/Math/MathML"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns:db="http://docbook.org/ns/docbook">
-  <title>Introduction </title>
+  <title>Introduction</title>
 
   <para>The files in this repository show output of testing a docbook to POD
   conversion pipeline. It uses the reference document:</para>
@@ -31,23 +31,28 @@ markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
   1.13.2</para>
 
   <para><link
-  xlink:href="http://search.cpan.org/dist/Markdent/">Markdent</link>
-  0.25</para>
+  xlink:href="http://search.cpan.org/dist/Markdent/">Markdent</link> 0.25 +
+  patched from <link
+  xlink:href="https://github.com/aspeer/Markdent">https://github.com/aspeer/Markdent</link></para>
 
-  <para><link xlink:href="???">Markdown::Pod</link> 0.005 + patches from
-  https://github.com/aspeer/Markdown-Pod</para>
+  <para><link xlink:href="???">Markdown::Pod</link> 0.005 + patches from <link
+  xlink:href="https://github.com/aspeer/Markdown-Pod">https://github.com/aspeer/Markdown-Pod</link></para>
+
+  <para>Markdent </para>
 
   <para>Markdown::Pod has been patched to allow the --dialect option + to
   include handlers missing from the original module + as simple Table
-  formatter (Text::Table::Tiny).</para>
+  formatter (Text::Table::Tiny). Mardent has been patched to work with GitHub
+  markup produced by Pandoc v1.12, v1.13</para>
 
   <para>The resulting output has a number of artifacts still being worked
   through:</para>
 
   <itemizedlist>
     <listitem>
-      <para>Pandoc is not converting the "Schema Jungle" table into markdown -
-      it is preserved as XML in the markdown output</para>
+      <para role="strikethrough">Pandoc is not converting the "Schema Jungle"
+      table into markdown - it is preserved as XML in the markdown
+      output</para>
     </listitem>
 
     <listitem>
@@ -56,7 +61,8 @@ markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
     </listitem>
 
     <listitem>
-      <para>Some code is not recognised as such (possibly by Markdent).</para>
+      <para>Replaceable (e.g. &amp;version;) elements are not interpreted
+      correctly</para>
     </listitem>
   </itemizedlist>
 
