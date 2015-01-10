@@ -24,7 +24,7 @@ L<Markdent|http://search.cpan.org/dist/Markdent/> 0.25 + patches from L<https://
 
 L<Markdown::Pod|???> 0.005 + patches from L<https://github.com/aspeer/Markdown-Pod>
 
-Markdown::Pod has been patched to allow the --dialect option + to include handlers missing from the original module + as simple Table formatter (Text::Table::Tiny). Markent has been patched to work with GitHub markup produced by Pandoc v1.12, v1.13
+Markdown::Pod has been patched to allow the --dialect option + to include handlers missing from the original module + as simple Table formatter (Text::Table::Tiny). Markdent has been patched to work with GitHub markup produced by Pandoc v1.12, v1.13
 
 The resulting output has a number of artifacts still being worked through:
 
