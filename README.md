@@ -30,6 +30,6 @@ The resulting output has a number of artifacts still being worked through:
 
 -   The "Removed Elements" table is not formatted correctly in the markdown (possibly by pandoc)
 
--   Replaceable (e.g. &version;) elements are not interpreted correctly
+-   Replaceable (e.g. docbook "version" ) elements are not interpreted correctly
 
 These are corner cases - for most simple Docbook documents the pipeline works well as a formatter. As an exampled this README was produced in [XMLMind XML Editor](http://www.xmlmind.com/xmleditor/) using a Docbook 5.0 Section Template and exported to markdown and POD using the above pipeline.

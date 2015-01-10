@@ -44,7 +44,7 @@ The "Removed Elements" table is not formatted correctly in the markdown (possibl
 
 =item -
 
-Replaceable (e.g. E<version>) elements are not interpreted correctly
+Replaceable (e.g. docbook "version" ) elements are not interpreted correctly
 
 
 

@@ -59,7 +59,7 @@ markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
     </listitem>
 
     <listitem>
-      <para>Replaceable (e.g. &amp;version;) elements are not interpreted
+      <para>Replaceable (e.g. docbook "version" ) elements are not interpreted
       correctly</para>
     </listitem>
   </itemizedlist>
