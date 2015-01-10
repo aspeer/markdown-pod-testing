@@ -725,6 +725,7 @@ Creating a customized schema is similar to creating a customization layer for XS
 
 ? is an empty RELAX NG customization that does nothing except define the name spaces and include the standard DocBook schema. The href attribute of the include element points to the location of the standard DocBook V5.0 schema.[6] All of the examples are given in both RNG and RNC form.
 
+
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
           ns="http://docbook.org/ns/docbook"
@@ -733,10 +734,13 @@ Creating a customized schema is similar to creating a customization layer for XS
  
    <!-- redefinitions of named patterns -->
  
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db
  # redefinitions of named patterns
+
 =head2 Elements
 
 
@@ -747,6 +751,7 @@ Adding an element typically takes two definitions. The first defines the new ele
 ? adds a new element, person, with the same content model as author. The new element will be allowed to appear wherever author can appear.
 
 The C<<< db.author >>> pattern is copied and renamed C<<< dbx.person >>>, defining a new element called person. Then, the C<<< db.author >>> pattern is redefined to be a choice of the current value or C<<< dbx.person >>>. The combine attribute tells RELAX NG to combine this pattern with the existing named pattern. In this case, the value of the combine attribute is “choice”, which tells the parser that either the original pattern or this new pattern is a valid match.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -765,7 +770,9 @@ The C<<< db.author >>> pattern is copied and renamed C<<< dbx.person >>>, defini
    <define name="db.author" combine="choice">
      <ref name="dbx.person"/>
    </define>
- </grammar> default namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ default namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc"
  # define the new element
@@ -773,9 +780,11 @@ The C<<< db.author >>> pattern is copied and renamed C<<< dbx.person >>>, defini
    element person { db.author.attlist, db.credit.contentmodel }
  # redefine the db.author pattern to allow db.person in
  # the same places as db.author
- db.author |= dbx.personThe preceding method works well when you'd like a new element to be a clone or near-clone of an existing element. It gives you complete control over the content model, but only limited control over where the element is allowed. It works well when you want to allow the element in the same places as an existing element, and for this example that works nicely, since author is allowed in four different named patterns, each of which would have had to be redefined to allow person. But, if you can't find an existing element that is allowed in exactly the places you need, this method doesn't work as well.
+ db.author |= dbx.person
+The preceding method works well when you'd like a new element to be a clone or near-clone of an existing element. It gives you complete control over the content model, but only limited control over where the element is allowed. It works well when you want to allow the element in the same places as an existing element, and for this example that works nicely, since author is allowed in four different named patterns, each of which would have had to be redefined to allow person. But, if you can't find an existing element that is allowed in exactly the places you need, this method doesn't work as well.
 
 ? adds two new elements by combining them into a higher level pattern. In this example, we'll add two new inline elements for writing about assembly language, register and instruction. We will allow them wherever programming inlines or operating system inlines are allowed. ? defines the two elements, creates a new named pattern (C<<< dbx.asm.inlines >>>) that contains them, and adds that pattern to C<<< db.programming.inlines >>> and C<<< db.os.inlines >>>. Since these two patterns don't have any elements in common, the strategy used in ? would require selecting two different elements to “clone”, which would be messy.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -807,7 +816,9 @@ The C<<< db.author >>> pattern is copied and renamed C<<< dbx.person >>>, defini
      <define name="db.os.inlines" combine="choice">
        <ref name="dbx.asm.inlines"/>
      </define>
- </grammar> default namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ default namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc"
  # define the new elements
@@ -818,11 +829,13 @@ The C<<< db.author >>> pattern is copied and renamed C<<< dbx.person >>>, defini
  # add the new inlines to programming and os inlines
  db.programming.inlines |= dbx.asm.inlines
  db.os.inlines |= dbx.asm.inlines
+
 =head3 Deleting elements
 
 Deleting elements is straightforward, but takes some care and planning. ? deletes the important admonition element by redefining it with a content model of C<<< notAllowed >>>. Note that in this example, the redefinition is inside the include element. This is required for redefinitions that completely replace an existing pattern.
 
 Be careful; If you delete an element that is a required part of another element's content model, you can make it impossible to create a valid document. For example, if you delete the title element, you won't be able to validate a book because a book requires a title.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -834,15 +847,19 @@ Be careful; If you delete an element that is a required part of another element'
        <notAllowed/>
      </define>
    </include>
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db {
    # redefine important element as notAllowed
    db.important = notAllowed
  }
+
 =head3 Customizing the content model of existing elements
 
 ? expands the definition of author to include two new elements, born and died. The author element allows two content models, C<<< db.person.author.contentmodel >>>, which defines an author who is a person, and C<<< db.org.author.contentmodel >>>, which defines an author that is an organization. We will modify C<<< db.person.author.contentmodel >>> so that only authors who are persons can have the new elements.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -864,14 +881,17 @@ Be careful; If you delete an element that is a required part of another element'
        </optional>
      </interleave>
    </define>
- </grammar> default namespace = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ default namespace = "http://docbook.org/ns/docbook"
  namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc"
  
  db.person.author.contentmodel &=
    element born { db.date.contentmodel }?
-   & element died { db.date.contentmodel }?This modification will allow instances like this:
+   & element died { db.date.contentmodel }?
+This modification will allow instances like this:
 
     <author>
       <personname>Babe Ruth</personname>
@@ -896,6 +916,7 @@ but because we only modified the content model for authors who are human, it won
 
 The simplest way to add an attribute to a single element is to add it to the attlist pattern for that element. ? adds the optional attributes born and died to the attribute list for author. The C<<< db.author.attlist >>> named pattern is redefined with the combine attribute set to “interleave”, which interleaves the two new optional attributes with the existing attributes on the list.
 
+
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
           ns="http://docbook.org/ns/docbook"
@@ -916,15 +937,19 @@ The simplest way to add an attribute to a single element is to add it to the att
        </optional>
      </interleave>
    </define>
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db
  
  db.author.attlist &=
    attribute born { db.date.contentmodel }?
-   & attribute died { db.date.contentmodel }?Unlike ?, ? allows the new attributes to appear on any author element, not just those using the person content model.
+   & attribute died { db.date.contentmodel }?
+Unlike ?, ? allows the new attributes to appear on any author element, not just those using the person content model.
 
 ? shows how you could limit the use of these attributes to authors who are persons. In this example, the new attributes are interleaved with the C<<< db.person.author.contentmodel >>>. The only difference between this example and ? is that the added patterns are identified as attributes rather than elements. This shows some of the flexibility of RELAX NG, which treats attributes and elements very consistently.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -946,18 +971,22 @@ The simplest way to add an attribute to a single element is to add it to the att
        </optional>
      </interleave>
    </define>
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db
  # redefinitions of named patterns
  db.person.author.contentmodel &=
    attribute born { db.date.contentmodel }?
-   & attribute died { db.date.contentmodel }?There is one difference in the treatment of attributes and elements that is worth noting. By the XML 1.0 definition, the relative order of attributes is not significant. Therefore, the interleave block is not required for attributes, though it does no harm.
+   & attribute died { db.date.contentmodel }?
+There is one difference in the treatment of attributes and elements that is worth noting. By the XML 1.0 definition, the relative order of attributes is not significant. Therefore, the interleave block is not required for attributes, though it does no harm.
 
 
 =head3 Deleting attributes
 
 Deleting an attribute is similar to deleting an element, except that you use the RELAX NG C<<< empty >>> pattern rather than C<<< notAllowed >>>. ? deletes the linking attributes, which are collected in the C<<< db.common.linking.attributes >>> pattern, by defining that pattern as C<<< empty >>>.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -968,16 +997,20 @@ Deleting an attribute is similar to deleting an element, except that you use the
        <empty/>
      </define>
    </include>
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db {
    db.common.linking.attributes = empty
- }Generally, C<<< empty >>> is used when deleting attributes and C<<< notAllowed >>> is used when deleting elements.
+ }
+Generally, C<<< empty >>> is used when deleting attributes and C<<< notAllowed >>> is used when deleting elements.
 
 
 =head3 Changing permitted content of attributes
 
 ? modifies C<<< db.spacing.enumeration >>> to add the additional value “large”. Note that to remove a value from an enumeration, you need to redefine the entire enumeration, minus the values you don't need.
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns:db="http://docbook.org/ns/docbook"
@@ -988,11 +1021,14 @@ Deleting an attribute is similar to deleting an element, except that you use the
    <define name="db.spacing.enumeration" combine="choice">
      <value>large</value>
    </define>
- </grammar> namespace db = "http://docbook.org/ns/docbook"
+ </grammar>
+
+ namespace db = "http://docbook.org/ns/docbook"
  
  include "docbook.rnc" inherit = db
  # add value to an enumeration
  db.spacing.enumeration |= "large"
+
 =head2 Naming and versioning DocBook customizations
 
 DocBook V5.0 is not tightly coupled with some particular validation technology like DTDs. This also means that DocBook V5.0 documents don't have to (and usually don't) start with a document type declaration (<!DOCTYPE…>) to specify the schema (DTD) to use. Instead, DocBook V5.0 instances can be easily distinguished from other XML vocabularies by using elements in the L<http://docbook.org/ns/docbook> namespace. This namespace is enough to distinguish DocBook from other XML based formats. But the DocBook schema evolves over time and there are several versions of DocBook (e.g. 3.1, 4.2, 4.5 and 5.0). Since DocBook version 5.0, the actual version used is indicated in the version attribute on a root element.
@@ -1093,6 +1129,7 @@ Download the MathML RELAX NG schema from L<http://yupotan.sppd.ne.jp/relax-ng/mm
 
 Create a schema customization in compact syntax—C<<< dbmathml.rnc >>>:
 
+
  namespace html = "http://www.w3.org/1999/xhtml"
  namespace mml = "http://www.w3.org/1998/Math/MathML"
  namespace db = "http://docbook.org/ns/docbook"
@@ -1105,7 +1142,9 @@ Create a schema customization in compact syntax—C<<< dbmathml.rnc >>>:
         | text
         | db._any)*
      }
- }Or, alternatively, you can use the XML syntax of RELAX NG—C<<< dbmathml.rng >>>:
+ }
+Or, alternatively, you can use the XML syntax of RELAX NG—C<<< dbmathml.rng >>>:
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns="http://relaxng.org/ns/structure/1.0">
@@ -1137,7 +1176,8 @@ Create a schema customization in compact syntax—C<<< dbmathml.rnc >>>:
    </define>
  </include>
  
- </grammar>Now use the customized schema (C<<< dbmathml.rnc >>> or C<<< dbmathml.rng >>>) instead of the original DocBook schema.
+ </grammar>
+Now use the customized schema (C<<< dbmathml.rnc >>> or C<<< dbmathml.rng >>>) instead of the original DocBook schema.
 
 B<Q:> How can I extend the DocBook schema with SVG elements?
 
@@ -1146,6 +1186,7 @@ B<A:> The situation is the same as with MathML support. You can use elements fro
 Download the SVG RELAX NG schema from L<http://www.w3.org/Graphics/SVG/1.1/rng/rng.zip> and unpack it somewhere (e.g. into an C<<< svg >>> subdirectory).
 
 Create a schema customization in compact syntax—C<<< dbsvg.rnc >>>:
+
 
  namespace html = "http://www.w3.org/1999/xhtml"
  namespace db = "http://docbook.org/ns/docbook"
@@ -1159,7 +1200,9 @@ Create a schema customization in compact syntax—C<<< dbsvg.rnc >>>:
         | text
         | db._any)*
      }
- }Or, alternatively, you can use the XML syntax of RELAX NG—C<<< dbsvg.rng >>>:
+ }
+Or, alternatively, you can use the XML syntax of RELAX NG—C<<< dbsvg.rng >>>:
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns="http://relaxng.org/ns/structure/1.0">
@@ -1191,11 +1234,13 @@ Create a schema customization in compact syntax—C<<< dbsvg.rnc >>>:
    </define>
  </include>
  
- </grammar>Now use the customized schema (C<<< dbsvg.rnc >>> or C<<< dbsvg.rng >>>) instead of the original DocBook schema.
+ </grammar>
+Now use the customized schema (C<<< dbsvg.rnc >>> or C<<< dbsvg.rng >>>) instead of the original DocBook schema.
 
 B<Q:> Is it possible to use the previous two customizations for MathML and SVG together?
 
 B<A:> Yes, you can create a special schema customization that combines both MathML and SVG with the DocBook schema. In compact syntax, the merged schema is:
+
 
  namespace html = "http://www.w3.org/1999/xhtml"
  namespace mml = "http://www.w3.org/1998/Math/MathML"
@@ -1211,7 +1256,9 @@ B<A:> Yes, you can create a special schema customization that combines both Math
         | text
         | db._any)*
      }
- }Or alternatively in the full RELAX NG syntax:
+ }
+Or alternatively in the full RELAX NG syntax:
+
 
  <?xml version="1.0" encoding="UTF-8"?>
  <grammar xmlns="http://relaxng.org/ns/structure/1.0">
@@ -1248,7 +1295,8 @@ B<A:> Yes, you can create a special schema customization that combines both Math
    </define>
  </include>
  
- </grammar>B<Q:> Are there any other examples of schema customization available?
+ </grammar>
+B<Q:> Are there any other examples of schema customization available?
 
 B<A:> Sure. Some of the are listed bellow:
 
