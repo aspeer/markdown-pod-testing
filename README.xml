@@ -32,17 +32,15 @@ markdown2pod --dialect Theory howto.md &gt; howto_m2pod-patched.pod
 
   <para><link
   xlink:href="http://search.cpan.org/dist/Markdent/">Markdent</link> 0.25 +
-  patched from <link
+  patches from <link
   xlink:href="https://github.com/aspeer/Markdent">https://github.com/aspeer/Markdent</link></para>
 
   <para><link xlink:href="???">Markdown::Pod</link> 0.005 + patches from <link
   xlink:href="https://github.com/aspeer/Markdown-Pod">https://github.com/aspeer/Markdown-Pod</link></para>
 
-  <para>Markdent </para>
-
   <para>Markdown::Pod has been patched to allow the --dialect option + to
   include handlers missing from the original module + as simple Table
-  formatter (Text::Table::Tiny). Mardent has been patched to work with GitHub
+  formatter (Text::Table::Tiny). Markent has been patched to work with GitHub
   markup produced by Pandoc v1.12, v1.13</para>
 
   <para>The resulting output has a number of artifacts still being worked
